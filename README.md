@@ -56,7 +56,7 @@ You can easily run `tap-mjjwordpressrest` by itself or in a pipeline using [Melt
 ```bash
 tap-mjjwordpressrest --version
 tap-mjjwordpressrest --help
-tap-mjjwordpressrest --config CONFIG --discover > ./catalog.json
+tap-mjjwordpressrest --config config.json
 ```
 
 ## Developer Resources
