@@ -1,0 +1,24 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: tap-mjjwordpressrest
+plugins:
+  extractors:
+  - name: tap-mjjwordpressrest
+    namespace: tap_mjjwordpressrest
+    executable: /Users/jjjay/Play/singer/taps/tap-mjjwordpressrest/tap-mjjwordpressrest.sh
+    capabilities:
+    - state
+    - catalog
+    - discover
+    config:
+      api_url: 'https://wptavern.com',
+      after: '2021-01-23T23:39:33'
+    settings:
+    - name: api_url
+      kind: string
+    - name: after
+      kind: string
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
