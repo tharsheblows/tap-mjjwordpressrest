@@ -1,0 +1,29 @@
+ {
+  "type": "object",
+  "properties": {
+    "comment_id": {
+      "type": "integer"
+    },
+    "commenter_id": {
+      "type": "integer"
+    },
+    "commenter_name": {
+      "type": "string"
+    },
+    "commenter_url": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "email_hash": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "post_id": {
+      "type": "integer"
+    }
+  }
+}

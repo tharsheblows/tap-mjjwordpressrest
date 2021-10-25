@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "integer"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "email_hash": {
+      "type": "string"
+    }
+  }
+}

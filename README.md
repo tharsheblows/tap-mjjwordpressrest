@@ -36,7 +36,7 @@ A sample config.json file :
 
 ```json
 {
-	"api_url": "https://yourdomain.com>",
+	"api_url": "https://yourdomain.com",
 	"per_page": 21,
 	"max_pages": 3,
 	"start_date": "2020-12-31T23:59:59"

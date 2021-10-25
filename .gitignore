@@ -2,6 +2,8 @@
 **/.secrets/*
 .secrets
 
+config.json
+
 # Ignore meltano internal cache and sqlite systemdb
 
 .meltano/

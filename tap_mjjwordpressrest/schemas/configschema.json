@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "api_url": {
+      "type": "string",
+      "description": "The url for the API service"
+    },
+    "max_pages": {
+      "type": "integer",
+      "description": "The maximum number of pages you'd like to get. If you'd like to get them all use a very high number."
+    },
+    "per_page": {
+      "type": "integer",
+      "description": "How many objects per page. The WP REST API max is a hard 100."
+    },
+    "start_date": {
+      "type": "string",
+      "description": "Limit response to whatever published after a given ISO8601 compliant date (eg 2021-01-23T23:39:33). Only used for Post objects of any type and Comments."
+    }
+  },
+  "required": ["api_url"]
+}

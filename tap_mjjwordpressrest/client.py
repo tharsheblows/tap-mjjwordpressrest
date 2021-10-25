@@ -12,14 +12,37 @@ from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
 from singer_sdk import typing as th  # JSON Schema typing helpers
 
-
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-
-
 class MJJWordPressRESTStream(RESTStream):
     """MJJWordPressREST stream class."""
 
     # url_base = "https://api.mysample.com"
+
+    @property
+    def per_page(self) -> int:
+        """Get the per page with default"""
+        if "per_page" in self.config:
+            p = self.config["per_page"]
+        else:
+            p = 10
+        return p
+
+    @property
+    def max_pages(self) -> int:
+        """Get the max pages with default"""
+        if "max_pages" in self.config:
+            p = self.config["max_pages"]
+        else:
+            p = 5
+        return p
+
+    @property
+    def start_date(self) -> str:
+        """Get the start_date param with default"""
+        if "start_date" in self.config:
+            p = self.config["start_date"]
+        else:
+            p = "2020-12-31T23:59:59"
+        return p
 
     # OR use a dynamic url_base:
     @property
@@ -48,7 +71,10 @@ class MJJWordPressRESTStream(RESTStream):
         #       next page. If this is the final page, return "None" to end the
         #       pagination loop.
 
-        if not response.json() or ( previous_token and previous_token > self.config["max_pages"] ):
+        no_more_responses = not response.json() or len(response.json()) < self.per_page
+        has_max_pages = ( previous_token and previous_token == self.max_pages )
+
+        if no_more_responses or has_max_pages:
             next_page_token = None
         elif not previous_token:
             next_page_token = 2
@@ -62,14 +88,14 @@ class MJJWordPressRESTStream(RESTStream):
     ) -> Dict[str, Any]:
         """Return a dictionary of values to be used in URL parameterization."""
         params: dict = {}
-        params["per_page"] = self.config["per_page"]
+        params["per_page"] = self.per_page
         if next_page_token:
             params["page"] = next_page_token
         if self.replication_key:
             params["order"] = "asc"
             params["order_by"] = self.replication_key
-        if self.can_use_start and self.config["start_date"]:
-            params["after"] = self.config["start_date"]
+        if self.can_use_start and self.start_date:
+            params["after"] = self.start_date
 
         return params
 
