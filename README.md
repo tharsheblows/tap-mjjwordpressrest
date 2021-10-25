@@ -1,6 +1,8 @@
 # tap-mjjwordpressrest
 
-`tap-mjjwordpressrest` is a Singer tap which currently gets data from the users and comments endpoints. It is a test tap for playing around with and should not be used in production environments.
+`tap-mjjwordpressrest` is a Singer tap which currently gets data from the users, comments and posts endpoints on a WordPress site which uses the WordPress REST API.
+
+It is a test tap for playing around with and should not be used in production environments.
 
 It does not (yet) save state.
 
@@ -29,6 +31,8 @@ Config options:
 - **per_page**: The number of objects returned per page. WordPress has a hard limit of 100.
 - **max_pages**: The maximum number of pages to return.
 - **start_date**: Limits response to objects published after a given ISO8601 compliant date. Only for Posts, Post Types and Comments. Well, it would be for Posts and Post Types had I added them in but I didn't. So only for Comments.
+
+Please not that comments and posts are queried in an ascending order by date so that keeping state will be possible in the future.
 
 Update `config-sample.json` and save as `config.json` to use as a standalone tap.
 

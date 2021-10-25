@@ -16,6 +16,10 @@
     "start_date": {
       "type": "string",
       "description": "Limit response to whatever published after a given ISO8601 compliant date (eg 2021-01-23T23:39:33). Only used for Post objects of any type and Comments."
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "The user agent set in the header of the request."
     }
   },
   "required": ["api_url"]

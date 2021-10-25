@@ -14,7 +14,7 @@ class UsersStream(MJJWordPressRESTStream):
     name = "users"
     path = "/users"
     primary_keys = ["user_id"]
-    replication_key = "id"
+    replication_key = None
     avatar_key = "avatar_urls"
     can_use_start = False
 
