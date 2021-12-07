@@ -1,26 +1,34 @@
 {
   "type": "object",
   "properties": {
-    "api_url": {
-      "type": "string",
-      "description": "The url for the API service"
-    },
-    "max_pages": {
-      "type": "integer",
-      "description": "The maximum number of pages you'd like to get. If you'd like to get them all use a very high number."
-    },
-    "per_page": {
-      "type": "integer",
-      "description": "How many objects per page. The WP REST API max is a hard 100."
-    },
-    "start_date": {
-      "type": "string",
-      "description": "Limit response to whatever published after a given ISO8601 compliant date (eg 2021-01-23T23:39:33). Only used for Post objects of any type and Comments."
-    },
-    "user_agent": {
-      "type": "string",
-      "description": "The user agent set in the header of the request."
-    }
+		"api_url": {
+			"type": "string",
+			"description": "The url for the API service"
+		},
+		"max_pages": {
+			"type": "integer",
+			"description": "The maximum number of pages you'd like to get. If you'd like to get them all use a very high number."
+		},
+		"per_page": {
+			"type": "integer",
+			"description": "How many objects per page. The WP REST API max is a hard 100."
+		},
+		"start_date": {
+			"type": "string",
+			"description": "Limit response to whatever published after a given ISO8601 compliant date (eg 2021-01-23T23:39:33). Only used for Post objects of any type and Comments."
+		},
+		"user_agent": {
+			"type": "string",
+			"description": "The user agent set in the header of the request."
+		},
+		"username": {
+			"type": "string",
+			"description": "If a password is required, this is the username. This should be set as an environment variable."
+		},
+		"application_password": {
+			"type": "string",
+			"description": "If a password is required, this is the password. This should be an application password and set as an environment variable."
+		}
   },
   "required": ["api_url"]
 }

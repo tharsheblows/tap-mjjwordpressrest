@@ -24,6 +24,9 @@
     },
     "post_id": {
       "type": "integer"
+    },
+    "link": {
+      "type": "string"
     }
   }
 }

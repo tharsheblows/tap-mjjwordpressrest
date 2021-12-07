@@ -28,11 +28,13 @@ tap-mjjwordpressrest --about
 
 Config options:
 - **api_url**: Required. The full domain of the WordPress site without a final backslash. Please note that not all WordPress sites will work, they must have an open REST API.
-- **per_page**: The number of objects returned per page. WordPress has a hard limit of 100.
-- **max_pages**: The maximum number of pages to return.
-- **start_date**: Limits response to objects published after a given ISO8601 compliant date. Only for Posts, Post Types and Comments. Well, it would be for Posts and Post Types had I added them in but I didn't. So only for Comments.
+- **per_page**: The number of objects returned per page. WordPress has a hard limit of 100. *Default: 10*
+- **max_pages**: The maximum number of pages to return. *Default: 5*
+- **start_date**: Limits response to objects published after a given ISO8601 compliant date. Only for Posts, Post Types and Comments. Well, it would be for Posts and Post Types had I added them in but I didn't. So only for Comments. *Default: 2020-12-31T23:59:59*
+- **user_agent**: Some APIs return a 403 error without a useragent. This value is used in the headers of the request. *Default: none*
 
-Please not that comments and posts are queried in an ascending order by date so that keeping state will be possible in the future.
+
+Please not that comments and posts are queried in an ascending order by date so that keeping state will be possible in the future. Kind of that is. Currently the "after" query param could be used to get those objects from a specific second in time but there will be collisions with this so that comments and posts could be missed if they happen at the same second but not all objects were gotten during the previous run.
 
 Update `config-sample.json` and save as `config.json` to use as a standalone tap.
 
@@ -49,7 +51,11 @@ A sample config.json file :
 
 ### Source Authentication and Authorization
 
-Currently this only works for open endpoints.
+If you are using source authentication and authorization, please use WordPress's application passwords and store your config as environment variables with using the nomeclature TAP_MJJWORDPRESSREST_<capitalised key name>. I use this with Meltano and the instructions for setting these is here: [https://meltano.com/docs/configuration.html#configuration-layers](https://meltano.com/docs/configuration.html#configuration-layers)
+
+- **username**: Set the username as the TAP_MJJWORDPRESSREST_USERNAME environment variable. For protected endpoints, use an application password for a user. This is the username.  *Default: none*
+- **application_password**: Set the application password as the TAP_MJJWORDPRESSREST_APPLICATION_PASSWORD environment variable.For protected endpoints, use an application password for a user. This is that password. *Default: none*
+
 
 ## Usage
 
@@ -57,10 +63,17 @@ You can easily run `tap-mjjwordpressrest` by itself or in a pipeline using [Melt
 
 ### Executing the Tap Directly
 
+#### Using config.json
+
 ```bash
 tap-mjjwordpressrest --version
 tap-mjjwordpressrest --help
 tap-mjjwordpressrest --config config.json
+```
+
+#### Using environment variables
+```bash
+tap-mjjwordpressrest --config ENV
 ```
 
 ## Developer Resources

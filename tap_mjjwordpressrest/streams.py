@@ -1,13 +1,12 @@
-"""Stream type classes for tap-mjjwordpressrest."""
+"""Stream type classes for tap-mjjwordpressrest. These classes do *not* get all of the data from the endpoints, you can edit them to get what you would like."""
 
 from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
-
-from singer_sdk import typing as th  # JSON Schema typing helpers
+from typing import Optional
 
 from tap_mjjwordpressrest.client import MJJWordPressRESTStream
 
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
+
 
 class UsersStream(MJJWordPressRESTStream):
     """The users stream."""
@@ -17,8 +16,6 @@ class UsersStream(MJJWordPressRESTStream):
     replication_key = None
     avatar_key = "avatar_urls"
     can_use_start = False
-
-    # TODO: make sure we can get all the users if needed. maybe a "get_all" config param? with a list of all the things you want to get all of.
 
     schema_filepath = SCHEMAS_DIR / "users.json"
 
@@ -61,7 +58,8 @@ class CommentsStream(MJJWordPressRESTStream):
             "date": row['date_gmt'],
             "email_hash": g,
             "content": row['content']['rendered'],
-            "post_id": row['post']
+            "post_id": row['post'],
+            "link": row['link']
         }
 
         return comment

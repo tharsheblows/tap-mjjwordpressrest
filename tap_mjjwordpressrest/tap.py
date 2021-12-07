@@ -1,7 +1,6 @@
 """MJJWordPressREST tap class."""
 
-import re
-
+import json
 from typing import List
 from pathlib import Path
 
@@ -29,7 +28,8 @@ class TapMJJWordPressREST(Tap):
     avatar_key = "avatar_urls"
 
     # Update this section with the actual config values you expect:
-    config_jsonschema_filepath = SCHEMAS_DIR / "configschema.json"
+    f = open( SCHEMAS_DIR / "configschema.json" )
+    config_jsonschema = json.load(f)
 
     def discover_streams(self) -> List[Stream]:
         """Return a list of discovered streams."""

@@ -2,7 +2,7 @@
 
 import requests
 import re
-import json
+import base64
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
 
@@ -15,15 +15,13 @@ from singer_sdk import typing as th  # JSON Schema typing helpers
 class MJJWordPressRESTStream(RESTStream):
     """MJJWordPressREST stream class."""
 
-    # url_base = "https://api.mysample.com"
-
     @property
     def per_page(self) -> int:
         """Get the per page with default"""
         if "per_page" in self.config:
             p = self.config["per_page"]
         else:
-            p = 10
+            p = 100
         return p
 
     @property
@@ -44,7 +42,6 @@ class MJJWordPressRESTStream(RESTStream):
             p = "2020-12-31T23:59:59"
         return p
 
-    # OR use a dynamic url_base:
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
@@ -60,25 +57,36 @@ class MJJWordPressRESTStream(RESTStream):
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
         # If not using an authenticator, you may also provide inline auth headers:
-        # headers["Private-Token"] = self.config.get("auth_token")
+        if "application_password" in self.config and "username" in self.config:
+            userpass = self.config.get("username") + ":" + \
+                self.config.get("application_password")
+            userpass_bytes = userpass.encode('ascii')
+            base64_bytes = base64.b64encode(userpass_bytes)
+            base64_userpass = base64_bytes.decode('ascii')
+            headers["Authorization"] = "Basic " + base64_userpass
         return headers
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
     ) -> Optional[Any]:
         """Return a token for identifying next page or None if no more pages. The maximum number of pages is configurable via tap settings."""
+        total_pages = int( response.headers['X-WP-TotalPages'] or 1 )
+
         # If pagination is required, return a token which can be used to get the
         #       next page. If this is the final page, return "None" to end the
         #       pagination loop.
 
-        no_more_responses = not response.json() or len(response.json()) < self.per_page
+        no_more_responses = int( previous_token or 1 ) >= total_pages
         has_max_pages = ( previous_token and previous_token == self.max_pages )
 
         if no_more_responses or has_max_pages:
+            # stop if we've done the max number of pages or if there are no more reponses.
             next_page_token = None
         elif not previous_token:
+            # if there's no previous token, we're on page 2.
             next_page_token = 2
         else:
+            # otherwise, keep on going.
             next_page_token = previous_token + 1
 
         return next_page_token
