@@ -13,7 +13,7 @@ class UsersStream(MJJWordPressRESTStream):
     name = "users"
     path = "/users"
     primary_keys = ["user_id"]
-    replication_key = None
+    replication_key = "id"
     avatar_key = "avatar_urls"
     can_use_start = False
 
@@ -25,7 +25,7 @@ class UsersStream(MJJWordPressRESTStream):
         g = self.get_email_hash(row)
 
         user = {
-            "user_id": row['id'],
+            "id": row['id'],
             "display_name": row['name'],
             "username": row['slug'],
             "email_hash": g
@@ -39,7 +39,7 @@ class CommentsStream(MJJWordPressRESTStream):
     name = "comments"
     path = "/comments"
     primary_keys = ["comment_id"]
-    replication_key = "date"
+    replication_key = "date_gmt"
     avatar_key = "author_avatar_urls"
     can_use_start = True
 
@@ -55,7 +55,7 @@ class CommentsStream(MJJWordPressRESTStream):
             "commenter_id": row['author'],
             "commenter_name": row['author_name'],
             "commenter_url": row['author_url'],
-            "date": row['date_gmt'],
+            "date_gmt": row['date_gmt'],
             "email_hash": g,
             "content": row['content']['rendered'],
             "post_id": row['post'],
@@ -69,7 +69,7 @@ class PostsStream(MJJWordPressRESTStream):
     name = "posts"
     path = "/posts"
     primary_keys = ["post_id"]
-    replication_key = "date"
+    replication_key = "date_gmt"
     can_use_start = True
 
     schema_filepath = SCHEMAS_DIR / "posts.json"
@@ -83,7 +83,7 @@ class PostsStream(MJJWordPressRESTStream):
             "author_id": row['author'],
             "title": row['title']['rendered'],
             "link": row['link'],
-            "date": row['date_gmt'],
+            "date_gmt": row['date_gmt'],
             "content": row['content']['rendered'],
         }
 

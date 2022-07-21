@@ -13,7 +13,7 @@
     "commenter_url": {
       "type": "string"
     },
-    "date": {
+    "date_gmt": {
       "type": "string"
     },
     "email_hash": {

@@ -91,6 +91,34 @@ class MJJWordPressRESTStream(RESTStream):
 
         return next_page_token
 
+    # # Copied, pasted, edited from https://programtalk.com/vs4/python/AutoIDM/tap-clickup/tap_clickup/streams.py/ .
+    # def get_starting_replication_key_value(
+    #     self, context: Optional[dict]
+    # ) -> Optional[int]:
+    #     """Return starting replication key value."""
+    #     if self.replication_key:
+    #         state = self.get_context_state(context)
+    #         replication_key_value = state.get("replication_key_value")
+    #         if replication_key_value and self.replication_key == state.get(
+    #             "replication_key"
+    #         ):
+    #             return replication_key_value
+    #         if "start_date" in self.config:
+    #             datetime_startdate = cast(
+    #                 datetime.datetime, pendulum.parse(self.config["start_date"])
+    #             )
+    #             startdate_seconds_after_epoch = int(
+    #                 datetime_startdate.replace(tzinfo=datetime.timezone.utc).timestamp()
+    #             )
+    #             return startdate_seconds_after_epoch
+    #         else:
+    #             self.logger.info(
+    #                 """Setting replication value to 0 as there wasn't a
+    #                 start_date provided in the config."""
+    #             )
+    #             return 0
+    #     return None
+
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
@@ -102,8 +130,9 @@ class MJJWordPressRESTStream(RESTStream):
         if self.replication_key:
             params["order"] = "asc"
             params["order_by"] = self.replication_key
-        if self.can_use_start and self.start_date:
-            params["after"] = self.start_date
+            params["after"] = self.get_starting_replication_key_value(context)
+        # if self.can_use_start and self.start_date:
+        #     params["after"] = self.start_date
 
         return params
 
