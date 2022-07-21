@@ -3,10 +3,8 @@
 import requests
 import re
 import base64
-from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
-
-from memoization import cached
+import logging
+from typing import Any, Dict, Optional, Iterable
 
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
@@ -131,6 +129,8 @@ class MJJWordPressRESTStream(RESTStream):
             params["order"] = "asc"
             params["order_by"] = self.replication_key
             params["after"] = self.get_starting_replication_key_value(context)
+            logging.info("AFTER")
+            logging.info(params["after"])
         # if self.can_use_start and self.start_date:
         #     params["after"] = self.start_date
 
