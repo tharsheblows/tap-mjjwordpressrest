@@ -4,8 +4,6 @@
 
 It is a test tap for playing around with and should not be used in production environments.
 
-It does not (yet) save state.
-
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 
 ## Installation

@@ -39,7 +39,7 @@ class CommentsStream(MJJWordPressRESTStream):
     name = "comments"
     path = "/comments"
     primary_keys = ["comment_id"]
-    replication_key = "date_gmt"
+    replication_key = "date"
     avatar_key = "author_avatar_urls"
     can_use_start = True
 
@@ -69,7 +69,7 @@ class PostsStream(MJJWordPressRESTStream):
     name = "posts"
     path = "/posts"
     primary_keys = ["post_id"]
-    replication_key = "date_gmt"
+    replication_key = "date"
     can_use_start = True
 
     schema_filepath = SCHEMAS_DIR / "posts.json"

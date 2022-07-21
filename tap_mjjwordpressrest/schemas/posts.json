@@ -16,6 +16,9 @@
     "date_gmt": {
       "type": "string"
     },
+    "date": {
+      "type": "string"
+    },
     "content": {
       "type": "string"
     }
