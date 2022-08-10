@@ -47,6 +47,10 @@ A sample config.json file :
 }
 ```
 
+### NOTE ON USERS
+
+I'm still not quite sure how to handle state with users. It would ideally be by user id (ie `id` in the `wp_users` table) but this isn't possible out of the box.
+
 ### Source Authentication and Authorization
 
 If you are using source authentication and authorization, please use WordPress's application passwords and store your config as environment variables with using the nomeclature TAP_MJJWORDPRESSREST_<capitalised key name>. I use this with Meltano and the instructions for setting these is here: [https://meltano.com/docs/configuration.html#configuration-layers](https://meltano.com/docs/configuration.html#configuration-layers)

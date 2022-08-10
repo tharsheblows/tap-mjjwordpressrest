@@ -2,6 +2,5 @@
 	"api_url": "<https://wpdomain.example>",
 	"per_page": 21,
 	"max_pages": 3,
-	"start_date": "2020-12-31T23:59:59",
 	"user_agent": "Mozilla/5.0"
 }

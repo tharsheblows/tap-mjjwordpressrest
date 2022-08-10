@@ -15,7 +15,6 @@ class UsersStream(MJJWordPressRESTStream):
     primary_keys = ["user_id"]
     replication_key = "id"
     avatar_key = "avatar_urls"
-    can_use_start = False
 
     schema_filepath = SCHEMAS_DIR / "users.json"
 
@@ -41,7 +40,6 @@ class CommentsStream(MJJWordPressRESTStream):
     primary_keys = ["comment_id"]
     replication_key = "date"
     avatar_key = "author_avatar_urls"
-    can_use_start = True
 
     schema_filepath = SCHEMAS_DIR / "comments.json"
 
@@ -70,7 +68,6 @@ class PostsStream(MJJWordPressRESTStream):
     path = "/posts"
     primary_keys = ["post_id"]
     replication_key = "date"
-    can_use_start = True
 
     schema_filepath = SCHEMAS_DIR / "posts.json"
 
